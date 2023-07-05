@@ -129,11 +129,10 @@ export function RegForm() {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col items-start">
-      <div className="w-full flex flex-col">
-        <h1 className="text-black text-center text-3xl mt-3 font-semibold">
-          BOOKING FORM
-        </h1>
+    <div className="w-full h-full flex flex-col items-start bg-slate-400 mt-[-64px]">
+
+      <div className="w-full flex flex-col mt-[70px] ">
+        <h1 className="text-black text-center text-3xl mt-3">BOOKING FORM</h1>
         <div className="w-full h-[1px] bg-black my-3"></div>
       </div>
 
@@ -148,7 +147,7 @@ export function RegForm() {
               <input
                 id="name"
                 type="text"
-                className={`w-[400px] bg-white outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
                   errors.name ? 'border-red-500' : ''
                 }`}
                 placeholder="Name"
@@ -167,7 +166,7 @@ export function RegForm() {
               <input
                 id="email"
                 type="email"
-                className={`w-[400px] bg-white outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
                   errors.email ? 'border-red-500' : ''
                 }`}
                 placeholder="Email"
@@ -188,7 +187,7 @@ export function RegForm() {
               <input
                 id="contactNumber"
                 type="text"
-                className={`w-[400px] bg-white outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
                   errors.contactNumber ? 'border-red-500' : ''
                 }`}
                 placeholder="Number"
@@ -209,7 +208,7 @@ export function RegForm() {
               <input
                 id="nic"
                 type="text"
-                className={`w-[400px] bg-white outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
                   errors.nic ? 'border-red-500' : ''
                 }`}
                 placeholder="NIC Number"
@@ -230,7 +229,7 @@ export function RegForm() {
               <input
                 id="pDate"
                 type="date"
-                className={`w-[400px] bg-white outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
                   errors.pDate ? 'border-red-500' : ''
                 }`}
                 placeholder="Select Here"
@@ -249,7 +248,7 @@ export function RegForm() {
               <input
                 id="passenger"
                 type="number"
-                className={`w-[400px] bg-white outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
                   errors.passenger ? 'border-red-500' : ''
                 }`}
                 placeholder="Please Select"
@@ -272,7 +271,7 @@ export function RegForm() {
               <input
                 id="pLocation"
                 type="text"
-                className={`w-[400px] bg-white outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
                   errors.pLocation ? 'border-red-500' : ''
                 }`}
                 placeholder="Pick-Up Location"
@@ -293,7 +292,7 @@ export function RegForm() {
               <input
                 id="dLocation"
                 type="text"
-                className={`w-[400px] bg-white outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
                   errors.dLocation ? 'border-red-500' : ''
                 }`}
                 placeholder="Drop-Off Location"
@@ -316,7 +315,7 @@ export function RegForm() {
               <input
                 id="pTime"
                 type="time"
-                className={`w-[400px] bg-white outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
                   errors.pTime ? 'border-red-500' : ''
                 }`}
                 placeholder="Select Time"
@@ -335,7 +334,7 @@ export function RegForm() {
               <input
                 id="dTime"
                 type="time"
-                className={`w-[400px] bg-white outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
                   errors.dTime ? 'border-red-500' : ''
                 }`}
                 placeholder="Select Time"
@@ -355,7 +354,7 @@ export function RegForm() {
               </label>
               <textarea
                 id="message"
-                className={`w-[810px] h-[100px] bg-white outline-none outline-offset-2 my-2 ${
+                className={`w-[810px] h-[100px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 ${
                   errors.message ? 'border-red-500' : ''
                 }`}
                 placeholder="Type your message here"
@@ -368,7 +367,7 @@ export function RegForm() {
             </div>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-4">
             <button
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded mt-4"
