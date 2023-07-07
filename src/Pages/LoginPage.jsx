@@ -58,9 +58,10 @@ export const Login = () => {
                         <button className='w-full text-white font-bold my-2 bg-[#CCB195] rounded-3xl p-2.5 text-center flex items-center justify-center hover:bg-[#caaa88]/80 cursor-pointer'>
                             LOG IN
                         </button>
+                        <a href='/createAccount'>
                         <button className='w-full text-black font-medium my-2 bg-white border-2 border-[#CCB195] rounded-3xl p-2 text-center flex items-center justify-center transition-all duration-200 hover:bg-[#CCB195] hover:text-white cursor-pointer'>
                             CREATE AN ACCOUNT
-                        </button>
+                        </button></a>
                     </div>
 
                     <div className='w-full flex items-center justify-center relative py-2 my-2'>

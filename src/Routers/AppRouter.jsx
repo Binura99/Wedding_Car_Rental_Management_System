@@ -6,6 +6,7 @@ import { CreateAccount } from "../Pages/CreateAccountPage"
 import { AppLayout } from "../Layout/AppLayout"
 import { Vehicle } from "../Pages/VehiclePage"
 import { Test } from "../Pages/Test"
+import { Rates } from "../Pages/Rates"
 
 const AppRouter = () => {
   return (
@@ -20,6 +21,7 @@ const AppRouter = () => {
           <Route path="bookNow" element={<RegForm/>}/>
           <Route path="createAccount" element={<CreateAccount/>}/>
           <Route path="vehicle" element={<Vehicle/>}/>
+          <Route path="rates" element={<Rates/>}/>
 
         </Route>
       </Routes>

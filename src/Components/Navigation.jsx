@@ -18,21 +18,30 @@ return(
             
             <ul className='hidden md:flex items-center space-x-14 mr-7 '>
 
-                <li className='w-11/12 text-black my-2 rounded-3xl p-1 text-center flex transition-all duration-200 hover:bg-[#CCB195] hover:text-white cursor-pointer justify-center items-center'>
-                    HOME
-                </li>
-                <li className='w-11/12 text-black my-2 rounded-3xl p-1 text-center flex transition-all duration-200 hover:bg-[#CCB195] hover:text-white cursor-pointer justify-center items-center'>
-                    VEHICE
-                </li>
-                <li className='w-11/12 text-black my-2 rounded-3xl p-1 text-center flex transition-all duration-200 hover:bg-[#CCB195] hover:text-white cursor-pointer justify-center items-center'>
-                    RATES
-                </li>
-                <li className='w-11/12 text-black whitespace-nowrap my-2 rounded-3xl p-1 text-center flex transition-all duration-200 hover:bg-[#CCB195] hover:text-white cursor-pointer justify-center items-center'>
-                    BOOK NOW
-                </li>
-                <li className='w-11/12 text-black my-2 rounded-3xl p-1 text-center flex transition-all duration-200 hover:bg-[#CCB195] hover:text-white cursor-pointer justify-center items-center'>
-                    LOGIN
-                </li>
+                <a href='/' className='w-11/12 text-black my-2 rounded-3xl p-1 text-center flex transition-all duration-200 hover:bg-[#CCB195] hover:text-white cursor-pointer justify-center items-center'>
+                <li >
+                    HOME 
+                </li></a>
+
+                <a href='/vehicle' className='w-11/12 text-black my-2 rounded-3xl p-1 text-center flex transition-all duration-200 hover:bg-[#CCB195] hover:text-white cursor-pointer justify-center items-center'> 
+                <li >
+                    VEHICE 
+                </li></a>
+
+                <a href='/rates' className='w-11/12 text-black my-2 rounded-3xl p-1 text-center flex transition-all duration-200 hover:bg-[#CCB195] hover:text-white cursor-pointer justify-center items-center'> 
+                <li >
+                    RATES 
+                </li></a>
+
+                <a href='/bookNow' className='w-11/12 text-black whitespace-nowrap my-2 rounded-3xl p-1 text-center flex transition-all duration-200 hover:bg-[#CCB195] hover:text-white cursor-pointer justify-center items-center'> 
+                <li >
+                    BOOK NOW 
+                </li></a>
+
+                <a href='/login' className='w-11/12 text-black my-2 rounded-3xl p-1 text-center flex transition-all duration-200 hover:bg-[#CCB195] hover:text-white cursor-pointer justify-center items-center'> 
+                <li >
+                    LOGIN 
+                </li></a>
                 
             </ul>
             
