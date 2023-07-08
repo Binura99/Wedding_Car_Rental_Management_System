@@ -7,6 +7,7 @@ import { AppLayout } from "../Layout/AppLayout"
 import { Vehicle } from "../Pages/VehiclePage"
 import { Test } from "../Pages/Test"
 import { Rates } from "../Pages/Rates"
+import { UserDashboard } from "../Pages/UserDashboard"
 
 const AppRouter = () => {
   return (
@@ -22,6 +23,7 @@ const AppRouter = () => {
           <Route path="createAccount" element={<CreateAccount/>}/>
           <Route path="vehicle" element={<Vehicle/>}/>
           <Route path="rates" element={<Rates/>}/>
+          <Route path="dashboard" element={<UserDashboard/>}/>
 
         </Route>
       </Routes>
