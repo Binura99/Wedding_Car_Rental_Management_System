@@ -1,6 +1,9 @@
 import Createbg from '../Photo/Create_Account_bg.jpg';
 
 export const CreateAccount = () => {
+
+        
+
     return(
         
         <div className="w-full h-screen flex items-center justify-center fixed mt-[-64px] z-0">
