@@ -1,49 +1,19 @@
-// const express = require("express");
-// const router = express.Router();
-// const {Users} = require("../models");
-// const bcrypt = require("bcrypt");
-
-// router.post("/", async (req, res) => {
-//     const { email, password } = req.body;
-//     bcrypt.hash(password, 10).then((hash) => {
-//         Users.create({
-//             email: email,
-//             password: hash,
-//         });
-//         res.json("SUCCESS");
-//     });
-// });
-
-// router.post("/login", async (req, res) => {
-//     const { email, password } = req.body;
-
-//     const usera = await Users.findOne({ where: {email: email } });
-
-//     if (!usera) res.json({ error: "User Doesn't Exist"});
-
-//     bcrypt.compare(password, usera.password).then((match) => {
-//         if (!match) res.json({ error: "Wrong Email Password Combination"});
-
-//         res.json("You Logged In!!!");
-//     });
-// });
-
-// module.exports = router;
-
-
 const express = require("express");
 const router = express.Router();
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
+// const { validateToken } = require("../middlewares/AuthMiddleware");
+const {sign} = require('jsonwebtoken');
 
 router.post("/", async (req, res) => {
-  const { email, password } = req.body;
+  const { name,email, password } = req.body;
   bcrypt.hash(password, 10).then((hash) => {
     Users.create({
+      name: name,
       email: email,
       password: hash,
     }).then(() => {
-      res.json("SUCCESS");
+      res.json("Successfully Registered");
     });
   });
 });
@@ -51,20 +21,24 @@ router.post("/", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  const usera = await Users.findOne({ where: { email: email } });
+  const userA = await Users.findOne({ where: { email: email } });
 
-  if (!usera) {
+  if (!userA) {
     res.json({ error: "User Doesn't Exist" });
     return; // Add return statement here
   }
 
-  bcrypt.compare(password, usera.password).then((match) => {
+  bcrypt.compare(password, userA.password).then((match) => {
     if (!match) {
       res.json({ error: "Wrong Email Password Combination" });
       return; // Add return statement here
     }
 
-    res.json("You Logged In!!!");
+    const accessToken = sign(
+      {email: userA.email, id: userA.id },
+      "importantsecret"
+      );
+    res.json(accessToken);
   });
 });
 

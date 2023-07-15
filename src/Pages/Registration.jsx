@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 export function RegForm() {
   const [formData, setFormData] = useState({
@@ -94,8 +95,18 @@ export function RegForm() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  // const reservation = () => {
+  //   const data = {  email: email, password: password };
+  //   axios.post("http://localhost:3001/reservations", data).then((response) => {
+  //     console.log(response.data);
+      
+      
+  //   });
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    // reservation();
 
     if (validateForm()) {
       // Form is valid, handle submission here

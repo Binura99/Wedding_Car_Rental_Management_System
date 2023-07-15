@@ -1,29 +1,29 @@
 import LogImage from '../Photo/Login_Image.jpg';
 import GIcon from '../Photo/GoogleIcon.png';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-
-import { UserDashboard } from './UserDashboard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-  const navigate = useNavigate();
-  const userRef = useRef();
-  const errRef = useRef();
 
+  let navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const login = () => {
     const data = { email: email, password: password };
     axios.post("http://localhost:3001/auth/login", data).then((response) => {
-      console.log(response.data);
-    });
-  };
+      if (response.data.error) { alert(response.data.error); } else {
+      sessionStorage.setItem("accessToken", response.data);
+      navigate('/dashboard', { replace: true });
+    }
+  });
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
     login();
+    
   };
 
   return (
@@ -48,8 +48,8 @@ export const Login = () => {
                 type='email'
                 placeholder='Email'
                 className='w-full text-black pay-4 my-4 bg-transparent border-b border-black outline-none focus:outline-none'
+
                 id='userEmail'
-                ref={userRef}
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 required
@@ -62,6 +62,7 @@ export const Login = () => {
                 type='password'
                 placeholder='Password'
                 className='w-full text-black pay-4 my-4 bg-transparent border-b border-black outline-none focus:outline-none'
+
                 id='password'
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
