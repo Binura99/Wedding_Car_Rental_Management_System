@@ -2,11 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { Reservations } = require("../models");
 
-// router.post("/", async (req, res) => {
-//     const listOfVehicles = await Vehicles.findAll();
-//     res.json(listOfVehicles);
-// });
-
 router.get("/", async (req, res) => {
     const listOfReservations = await Reservations.findAll();
     res.json(listOfReservations);

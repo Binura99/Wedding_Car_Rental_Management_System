@@ -20,6 +20,26 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    packageH2: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    packageH4: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    packageH8: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    excessHours: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    excessMileage: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
 });
 
 return Vehicles;

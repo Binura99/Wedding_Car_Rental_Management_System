@@ -75,7 +75,6 @@ export const CreateAccount = () => {
                         <div className='flex flex-col w-full mb-5 whitespace-nowrap z-10'>
                             <h3 className='flex text-4xl font-semibold font-LexandExa justify-center '>CREATE YOUR</h3>
                             <h3 className='flex text-4xl font-semibold font-LexandExa justify-center mb-4 text-[#CCB195]'>ACCOUNT</h3>
-                            {/* {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>} */}
                         </div>
                         
                 <form onSubmit={handleSubmit}>

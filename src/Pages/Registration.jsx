@@ -95,18 +95,20 @@ export function RegForm() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  // const reservation = () => {
-  //   const data = {  email: email, password: password };
-  //   axios.post("http://localhost:3001/reservations", data).then((response) => {
-  //     console.log(response.data);
+  const reservation = () => {
+    const data = { name: formData.name, email: formData.email, contactNumber: formData.contactNumber, nic: formData.nic, pDate: formData.pDate,
+      passenger: formData.passenger, pLocation: formData.pLocation, dLocation: formData.dLocation, pTime: formData.pTime, dTime: formData.dTime,
+      message: formData.message,};
+    axios.post("http://localhost:3001/reservations", data).then((response) => {
+      console.log(response.data);
       
       
-  //   });
-  // };
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // reservation();
+    reservation();
 
     if (validateForm()) {
       // Form is valid, handle submission here

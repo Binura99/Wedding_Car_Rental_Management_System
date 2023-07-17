@@ -116,7 +116,7 @@ export const Vehicle = () => {
               <img className="h-48 w-full object-cover md:h-full md:w-48" src={value.vehiclePhoto} alt={value.vehicleType}/>
             </div>
 
-            <div className="p-16"> {/* vehicle model */}
+            <div className="p-16 w-full"> {/* vehicle model */}
               <div className="tracking-wide text-3xl text-indigo-500 font-semibold">{value.vehicleType} {value.vehicleYear}</div>
               {/* vehicle Description */}
               <p className="mt-2 text-slate-500">{value.vehicleDescription}</p>
