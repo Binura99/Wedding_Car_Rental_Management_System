@@ -101,8 +101,7 @@ export function RegForm() {
       message: formData.message,};
     axios.post("http://localhost:3001/reservations", data).then((response) => {
       console.log(response.data);
-      
-      
+ 
     });
   };
 
