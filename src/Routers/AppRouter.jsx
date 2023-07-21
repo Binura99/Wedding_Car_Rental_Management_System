@@ -8,6 +8,7 @@ import { Vehicle } from "../Pages/VehiclePage"
 import { Test } from "../Pages/Test"
 import { Rates } from "../Pages/Rates"
 import { UserDashboard } from "../Pages/UserDashboard"
+import { VehicleInfo } from "../Pages/VehicleInfo"
 
 const AppRouter = () => {
   return (
@@ -24,6 +25,7 @@ const AppRouter = () => {
           <Route path="vehicle" element={<Vehicle/>}/>
           <Route path="rates" element={<Rates/>}/>
           <Route path="dashboard" element={<UserDashboard/>}/>
+          <Route path="vehicle/:id" element={<VehicleInfo/>}/>
 
         </Route>
       </Routes>

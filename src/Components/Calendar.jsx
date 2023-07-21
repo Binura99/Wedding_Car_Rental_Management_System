@@ -9,7 +9,7 @@ const nonAvailableDates = [
   // Add more non-available dates as needed
 ];
 
-export const Test = () => {
+export const CalendarBox = () => {
 
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(null);

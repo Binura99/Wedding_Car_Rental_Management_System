@@ -99,7 +99,11 @@ export function RegForm() {
     const data = { name: formData.name, email: formData.email, contactNumber: formData.contactNumber, nic: formData.nic, pDate: formData.pDate,
       passenger: formData.passenger, pLocation: formData.pLocation, dLocation: formData.dLocation, pTime: formData.pTime, dTime: formData.dTime,
       message: formData.message,};
-    axios.post("http://localhost:3001/reservations", data).then((response) => {
+    axios.post("http://localhost:3001/reservations",{
+      headers: {
+        accessToken: sessionStorage.getItem("accessToken"),
+      },
+    }, data).then((response) => {
       console.log(response.data);
  
     });
