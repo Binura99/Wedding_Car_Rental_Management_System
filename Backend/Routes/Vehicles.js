@@ -18,5 +18,18 @@ router.post("/", async (req, res) => {
     await Vehicles.create(vehicle);
     res.json("Added Vehicle");
 });
+//new one
+router.put("/:id", async (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    await Vehicles.update(data, { where: { id } });
+    res.json("Updated Vehicle");
+  });
+  
+  router.delete("/:id", async (req, res) => {
+    const id = req.params.id;
+    await Vehicles.destroy({ where: { id } });
+    res.json("Deleted Vehicle");
+  });
 
 module.exports = router;
