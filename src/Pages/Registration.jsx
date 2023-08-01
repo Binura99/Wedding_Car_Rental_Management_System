@@ -141,7 +141,7 @@ export function RegForm() {
   const reservation = () => {
     const data = { name: formData.name, email: formData.email, rVehicle: formData.rVehicle, rPackage: formData.rPackage, contactNumber: formData.contactNumber, nic: formData.nic, pDate: formData.pDate,
       passenger: formData.passenger, pLocation: formData.pLocation, dLocation: formData.dLocation, pTime: formData.pTime, dTime: formData.dTime,
-      message: formData.message, UserId: currentUserId,};
+      message: formData.message, UserId: currentUserId, rDriver:" ", driverNum:" ",};
 
 
       axios.post("http://localhost:3001/reservations", data, 

@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 // const { validateToken } = require("../middlewares/AuthMiddleware");
 const {sign} = require('jsonwebtoken');
 const { validateToken } = require("../middlewares/AuthMiddleware");
+const { where } = require("sequelize");
 
 router.post("/", async (req, res) => {
   const { name, email, password, role, number } = req.body;
@@ -52,6 +53,10 @@ router.get("/auth2",validateToken,(req, res) => {
 router.get("/", async (req, res) => {
   const listOfUsers = await Users.findAll();
   res.json(listOfUsers);
+});
+router.get("/DrId", async (req, res) => {
+  const listOfDrivers = await Users.findAll({where: {role: "Driver"}});
+  res.json(listOfDrivers);
 });
 
 router.get("/:id", async (req, res) => {

@@ -4,10 +4,17 @@ import React, { useEffect, useState } from 'react'
 export const UpdateBookingModal = ({ isOpen, onClose, rId }) => { 
 
     const [listOfVehicles, setListOfVehicles] = useState([]);
+    const [listOfDrivers, setListOfDrivers] = useState([]);
 
     useEffect(() => {
         axios.get("http://localhost:3001/vehicles").then((response) => {
           setListOfVehicles(response.data);
+        });
+      }, []);
+
+    useEffect(() => {
+        axios.get("http://localhost:3001/auth/DrId").then((response) => {
+            setListOfDrivers(response.data);
         });
       }, []);
 
@@ -26,15 +33,14 @@ export const UpdateBookingModal = ({ isOpen, onClose, rId }) => {
         dTime: '',
         message: '',
         UserId: '',
-        // driver:'',
-        // driverNumber:'',
+        rDriver:'',
+        driverNum:'',
       });
     
       useEffect(() => {
         axios.get(`http://localhost:3001/reservations/${rId}`).then((response) => {
     
         setBookingData({...response.data[0]});
-          console.log(response.data)
         });
       }, [rId]);
     
@@ -193,26 +199,44 @@ export const UpdateBookingModal = ({ isOpen, onClose, rId }) => {
                         onChange={(e) => setBookingData({ ...bookingData, message: e.target.value })}
                         />
                 </div>
-    {/* 12 
+    {/* 12 */}
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">Driver</label>
-                        <input
+                        <select
+                        id="rDriver"
                         type="text"
                         className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:border-blue-500"
-                        value={bookingData.name}
-                        onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
-                        />
+                        value={bookingData.rDriver}
+                        onChange={(e) => setBookingData({ ...bookingData, rDriver: e.target.value })}
+                        >
+
+                            <option placeholder="Driver"></option>
+                                {listOfDrivers.map((value, key) => (
+                            <option key={value.id} value={value.name}>{value.name}</option>
+                
+                            ))}
+                            
+                        </select>
                 </div>
-    13
-                <div className="mb-4">
+
+    {/* 13 */}
+                    <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">Driver Number</label>
-                        <input
+                        <select
                         type="text"
                         className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:border-blue-500"
-                        value={bookingData.name}
-                        onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
-                        />
-                </div> */}
+                        value={bookingData.DriverNum}
+                        onChange={(e) => setBookingData({ ...bookingData, driverNum: e.target.value })}
+                        >
+
+                        <option placeholder="Driver"></option>
+                        {listOfDrivers.map((value, key) => (
+                        <option key={value.number} value={value.number}>{value.name} - {value.number}</option>
+
+                        ))}
+
+                        </select>
+                </div>
 
                 <div className="flex justify-center">
                     <button
