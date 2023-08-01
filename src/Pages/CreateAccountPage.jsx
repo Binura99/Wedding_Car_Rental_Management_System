@@ -8,13 +8,15 @@ export const CreateAccount = () => {
 
     let navigate = useNavigate();
     const [name, setName] = useState('');
+    // const [role, setRole] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    
 
     const account = () => {
-        const data = { name: name, email: email, password: password };
+        const data = { name: name, email: email, password: password, role: "Customer", number: " ",};
         axios.post("http://localhost:3001/auth", data).then((response) => {
           console.log(response.data);
           navigate('/login', { replace: true });

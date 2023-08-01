@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import axios from 'axios';
 
 // Replace this with your actual list of non-available dates
-const nonAvailableDates = [
-  '2023-07-15',
-  '2023-07-18',
-  '2023-07-22',
-  // Add more non-available dates as needed
-];
+const nonAvailableDates = []
+//   '2023-08-15',
+//   '2023-08-18',
+//   '2023-08-22',
+//   '2023-08-28',
+//   // Add more non-available dates as needed
+// ];
 
-export const CalendarBox = () => {
+export const CalendarBox = ({ vehicleName, unavailableDates }) => {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [pDate, setPDate] = useState([]);
 
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const [selectedDate, setSelectedDate] = useState(null);
+  useEffect(() => {
+    // Make an API call to fetch booked dates for the selected vehicle
+    axios.get(`http://localhost:3001/reservations?vehicle=${vehicleName}`).then((response) => {
+      const bookedDates = response.data.map((reservation) => reservation.pDate);
+      setPDate(bookedDates);
+    });
+  }, [vehicleName]);
+
+  const isDateAvailable = (date) => !nonAvailableDates.includes(date) && !unavailableDates.includes(date);
 
   const handlePrevMonth = () => {
     const prevMonth = new Date(currentDate);
@@ -30,7 +42,7 @@ export const CalendarBox = () => {
     setSelectedDate(date);
   };
 
-  const isDateAvailable = (date) => !nonAvailableDates.includes(date);
+  // const isDateAvailable = (date) => !nonAvailableDates.includes(date) && !pDate.includes(date);
 
   const renderCalendarDays = () => {
     const startDate = new Date(currentDate);
@@ -40,23 +52,25 @@ export const CalendarBox = () => {
       const date = startDate.toISOString().split('T')[0];
       const isAvailable = isDateAvailable(date);
       const isCurrentDate = startDate.toDateString() === new Date().toDateString();
+
+      const isBookedDate = pDate.includes(date); // Check if the date is booked
+
       days.push(
         <div
           key={date}
-          className={classNames(
-            'p-1 cursor-pointer text-center text-sm',
-            {
-              'bg-blue-500 text-white': isAvailable && selectedDate === date,
-              'bg-gray-300': !isAvailable,
-              'hover:bg-blue-500 hover:text-white': isAvailable && selectedDate !== date,
-              'bg-yellow-300': isCurrentDate && selectedDate !== date,
-            },
-          )}
+          className={classNames('p-1 cursor-pointer text-center text-sm', {
+            'bg-blue-500 text-white': isAvailable && selectedDate === date,
+            'bg-gray-300': !isAvailable,
+            'hover:bg-blue-500 hover:text-white': isAvailable && selectedDate !== date,
+            'bg-yellow-300': isCurrentDate && selectedDate !== date,
+            'bg-gray-300 text-white': isBookedDate,
+          })}
           onClick={() => handleDateClick(date)}
         >
           {startDate.getDate()}
         </div>
       );
+
       startDate.setDate(startDate.getDate() + 1);
     }
     return days;
@@ -75,17 +89,30 @@ export const CalendarBox = () => {
         <button onClick={handleNextMonth}>&gt;</button>
       </div>
       <div className="grid grid-cols-7 gap-1">
-        <div className="font-bold text-xs">Sun</div>
-        <div className="font-bold text-xs">Mon</div>
-        <div className="font-bold text-xs">Tue</div>
-        <div className="font-bold text-xs">Wed</div>
-        <div className="font-bold text-xs">Thu</div>
-        <div className="font-bold text-xs">Fri</div>
-        <div className="font-bold text-xs">Sat</div>
+        <div className="font-bold text-xs text-center">Sun</div>
+        <div className="font-bold text-xs text-center">Mon</div>
+        <div className="font-bold text-xs text-center">Tue</div>
+        <div className="font-bold text-xs text-center">Wed</div>
+        <div className="font-bold text-xs text-center">Thu</div>
+        <div className="font-bold text-xs text-center">Fri</div>
+        <div className="font-bold text-xs text-center">Sat</div>
         {renderCalendarDays()}
       </div>
+
+      <div className='flex flex-row gap-8 justify-center'>
+        <div className='flex gap-2'>
+          <img src="https://iili.io/HQ2jh1p.png" alt="Gray" className='h-3 mt-1' />
+          <p className='text-sm'>Not Available</p>
+        </div>
+
+        <div className='flex gap-2'>
+          <img src="https://iili.io/HQ2Xgus.png" alt="Yellow" className='h-3 mt-1' />
+          <p className='text-sm'>Current Date</p>
+        </div>
+      </div>
+      
       {selectedDate && (
-        <div className="mt-2 text-sm">
+        <div className="flex mt-2 text-sm justify-center">
           Selected Date: {selectedDate}
         </div>
       )}

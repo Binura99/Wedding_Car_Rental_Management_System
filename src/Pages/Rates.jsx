@@ -4,21 +4,6 @@ import axios from "axios";
 
 export const Rates = () => {
 
-  // const vehicleData = [
-  //   {
-  //     vehicleType: '',
-  //     vehicleNum: '',
-  //     vehicleYear: '',
-  //     vehicleDescription: '',
-  //     vehiclePhoto: '',
-  //     packageH2: '',
-  //     packageH4: '',
-  //     packageH8: '',
-  //     excessHours: '',
-  //     excessMileage: '',
-  //   },
-    
-  // ];
 
   const [listOfVehicles, setListOfVehicles] = useState([]);
 

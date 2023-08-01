@@ -41,12 +41,14 @@ export const Home = () => {
           </div>
 
           <div className='flex flex-row '>
+            <a href="/bookNow">
             <button 
             // onSubmit={}
             className='font-lexendG font-medium text-white text-center gap-3 whitespace-nowrap flex w-full my-2 bg-[#CCB195] rounded-3xl p-3 items-center justify-center hover:bg-[#caaa88]/80 cursor-pointer'>
               Book Now
               <img src={ArrowRight} alt="arrow right" className='h-[16px]' />
             </button>
+            </a>
             
           </div>
 

@@ -1,95 +1,138 @@
-import React, { useState } from 'react';
-import classNames from 'classnames';
+// import axios from "axios";
+// import { useEffect, useState, createContext } from "react";
+// import jwtDecode from "jwt-decode";
+// import { useNavigate } from "react-router-dom";
 
-// Replace this with your actual list of non-available dates
-const nonAvailableDates = [
-  '2023-07-15',
-  '2023-07-18',
-  '2023-07-22',
-  // Add more non-available dates as needed
-];
+// const AuthContext = createContext({
+//   contextData: {
+//     user: null,
+//     loginUser: () => {},
+//     logOutUser: () => {},
+//     authTokens: null,
+//   },
+// });
+
+// export default AuthContext;
+
+// export const Test = ({ children }) => {
+//   const authTokensString = localStorage.getItem("authTokens");
+//   const [ accessToken , setAccessToken] = useState();
+//   const savedAuthTokens = authTokensString ? JSON.parse(authTokensString) : null;
+//   const savedUsers = authTokensString ? jwtDecode(authTokensString) : null;
+//   const [authTokens, setAuthTokens] = useState("");
+//   const [user, setUser] = useState(savedUsers);
+//   const [loading, setLoading] = useState(true);
+//   const Navigate = useNavigate();
+
+//   const loginUser = async(data) => {
+
+//     try {
+//       const result = await axios.post("http://localhost:3001/auth/login", data)
+//       if(result.status===200){
+//         setAccessToken(result.data)
+//         console.log(accessToken)
+//         setUser(jwtDecode(result.data));
+//         console.log(result.data)
+//         localStorage.setItem("authTokens", JSON.stringify(result.data));
+//         Navigate("/dashboard");
+//       }
+      
+//     } catch (error) {
+//       console.error("Login failed:", error);
+//     }
+//   //  _______________________________________________________________________
+//     // axios
+//     //   .post("http://localhost:3001/auth/login", data)
+//     //   .then((response) => {
+//     //     if (response.status === 200) {
+//     //       console.log(response.data)
+//     //       setAccessToken("testtests   ");
+//     //       setUser(jwtDecode(response.data));
+//     //       console.log(accessToken);
+//     //       localStorage.setItem("authTokens", JSON.stringify(response.data));
+//     //       Navigate("/dashboard");
+//     //     } else {
+//     //       console.log("error");
+//     //     }
+//     //   })
+//     //   .catch((error) => {
+//     //     // Handle login error
+//     //     console.error("Login failed:", error);
+//     //   });
+
+//     // ______________________________________________________________________________
+//   };
+
+//   const logOutUser = () => {
+//     setAuthTokens(null);
+//     setUser(null);
+//     localStorage.removeItem("authTokens");
+//     Navigate("/");
+//   };
+
+//   const updateToken = async () => {
+//     axios
+//       .post("http://127.0.0.1:8000/user/token/refresh", { refresh: authTokens?.refresh })
+//       .then((response) => {
+//         if (response.status === 200) {
+//           setAuthTokens(response.data);
+//           setUser(jwtDecode(response.data.access));
+//           localStorage.setItem("authTokens", JSON.stringify(response.data));
+//         } else {
+//           logOutUser();
+//           console.error("error", response.status);
+//         }
+//       })
+//       .catch((error) => {
+//         console.error("error", error);
+//       });
+//   };
+
+//   useEffect(() => {
+//     const fourMinutes = 4 * 60 * 1000;
+//     const interval = setInterval(() => {
+//       if (authTokens) {
+//         updateToken();
+//       }
+//     }, fourMinutes);
+
+//     return () => clearInterval(interval);
+//   }, [authTokens, loading]);
+
+//   const contextData = {
+//     user: user,
+//     authTokens: authTokens,
+//     loginUser: loginUser,
+//     logOutUser: logOutUser,
+//   };
+
+//   return (
+//     <AuthContext.Provider value={{ contextData }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };
+
+// };
+
+import React, { useState } from 'react'
+import { Test3 } from './Test3';
+import { Test2 } from './Test2';
+
 
 export const Test = () => {
+  const [expenses, setExpenses] = useState([]);
 
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const [selectedDate, setSelectedDate] = useState(null);
-
-  const handlePrevMonth = () => {
-    const prevMonth = new Date(currentDate);
-    prevMonth.setMonth(prevMonth.getMonth() - 1);
-    setCurrentDate(prevMonth);
+  const handleAddExpense = (expenseData) => {
+    setExpenses([...expenses, expenseData]);
+    console.log('All Expenses:', expenses);
+    alert('Expense added and data logged to console!');
   };
 
-  const handleNextMonth = () => {
-    const nextMonth = new Date(currentDate);
-    nextMonth.setMonth(nextMonth.getMonth() + 1);
-    setCurrentDate(nextMonth);
-  };
-
-  const handleDateClick = (date) => {
-    setSelectedDate(date);
-  };
-
-  const isDateAvailable = (date) => !nonAvailableDates.includes(date);
-
-  const renderCalendarDays = () => {
-    const startDate = new Date(currentDate);
-    startDate.setDate(1);
-    const days = [];
-    while (startDate.getMonth() === currentDate.getMonth()) {
-      const date = startDate.toISOString().split('T')[0];
-      const isAvailable = isDateAvailable(date);
-      const isCurrentDate = startDate.toDateString() === new Date().toDateString();
-      days.push(
-        <div
-          key={date}
-          className={classNames(
-            'p-1 cursor-pointer text-center text-sm',
-            {
-              'bg-blue-500 text-white': isAvailable && selectedDate === date,
-              'bg-gray-300': !isAvailable,
-              'hover:bg-blue-500 hover:text-white': isAvailable && selectedDate !== date,
-              'bg-yellow-300': isCurrentDate && selectedDate !== date,
-            },
-          )}
-          onClick={() => handleDateClick(date)}
-        >
-          {startDate.getDate()}
-        </div>
-      );
-      startDate.setDate(startDate.getDate() + 1);
-    }
-    return days;
-  };
-
-  const currentMonth = currentDate.toLocaleString('default', { month: 'long' });
-  const currentYear = currentDate.getFullYear();
-
-
-    return(
-        
-        <div className="container mx-auto p-2 w-[375px] bg-white my-5 rounded-xl shadow-lg overflow-x-auto">
-      <div className="flex items-center justify-between mb-2">
-        <button onClick={handlePrevMonth}>&lt;</button>
-        <h1 className="text-lg font-bold">{currentMonth} {currentYear}</h1>
-        <button onClick={handleNextMonth}>&gt;</button>
-      </div>
-      <div className="grid grid-cols-7 gap-1">
-        <div className="font-bold text-xs">Sun</div>
-        <div className="font-bold text-xs">Mon</div>
-        <div className="font-bold text-xs">Tue</div>
-        <div className="font-bold text-xs">Wed</div>
-        <div className="font-bold text-xs">Thu</div>
-        <div className="font-bold text-xs">Fri</div>
-        <div className="font-bold text-xs">Sat</div>
-        {renderCalendarDays()}
-      </div>
-      {selectedDate && (
-        <div className="mt-2 text-sm">
-          Selected Date: {selectedDate}
-        </div>
-      )}
+  return (
+    <div>
+      <h1>Vehicle Maintenance Page</h1>
+      <Test2 onAddExpense={handleAddExpense} />
     </div>
-  );
-        
+  )
 };

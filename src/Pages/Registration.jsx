@@ -1,7 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Login } from "../Pages/LoginPage"
 
 export function RegForm() {
+
+  const accessToken = localStorage.getItem("accessToken");
+  const [errors, setErrors] = useState({});
+  const [currentUserId, setCurrentUserId] = useState('');
+
+
+  useEffect(() => {
+    if (accessToken) {
+      try {
+        const user = JSON.parse(atob(accessToken.split('.')[1]));// Decoding the JWT payload
+        setCurrentUserId(user.id);
+        
+
+      } catch (error) {
+        console.error('Error decoding the JWT payload:', error);
+        // Handle any error that may occur during decoding
+      }
+    }
+  }, [accessToken, currentUserId]);
+
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,9 +36,10 @@ export function RegForm() {
     pTime: '',
     dTime: '',
     message: '',
+    rVehicle: '',
+    rPackage: '',
   });
 
-  const [errors, setErrors] = useState({});
 
   const validateForm = () => {
     const newErrors = {};
@@ -24,6 +47,14 @@ export function RegForm() {
     // Validate name
     if (formData.name.trim() === '') {
       newErrors.name = 'Name is required';
+    }
+
+    if (formData.rVehicle.trim() === '') {
+      newErrors.rVehicle = 'Vehicle is required';
+    }
+
+    if (formData.rPackage.trim() === '') {
+      newErrors.rPackage = 'Package is required';
     }
 
     // Validate email
@@ -91,35 +122,56 @@ export function RegForm() {
     return /^\d{10}$/.test(contactNumber);
   };
 
+
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const reservation = () => {
-    const data = { name: formData.name, email: formData.email, contactNumber: formData.contactNumber, nic: formData.nic, pDate: formData.pDate,
-      passenger: formData.passenger, pLocation: formData.pLocation, dLocation: formData.dLocation, pTime: formData.pTime, dTime: formData.dTime,
-      message: formData.message,};
-    axios.post("http://localhost:3001/reservations",{
-      headers: {
-        accessToken: sessionStorage.getItem("accessToken"),
-      },
-    }, data).then((response) => {
-      console.log(response.data);
- 
+  
+
+  const [listOfVehicles, setListOfVehicles] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/vehicles").then((response) => {
+      setListOfVehicles(response.data);
     });
-  };
+  }, []);
+
+  const reservation = () => {
+    const data = { name: formData.name, email: formData.email, rVehicle: formData.rVehicle, rPackage: formData.rPackage, contactNumber: formData.contactNumber, nic: formData.nic, pDate: formData.pDate,
+      passenger: formData.passenger, pLocation: formData.pLocation, dLocation: formData.dLocation, pTime: formData.pTime, dTime: formData.dTime,
+      message: formData.message, UserId: currentUserId,};
+
+
+      axios.post("http://localhost:3001/reservations", data, 
+      {
+        headers: {
+          accessToken: accessToken,
+        },
+      }).then((response) => {
+
+        if (response.data.error) { alert(response.data.error); } else {
+        console.log(response.data);
+        alert(response.data)
+      }
+      });
+    };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    reservation();
+    
 
     if (validateForm()) {
+      reservation();
       // Form is valid, handle submission here
       console.log('Form submitted:', formData);
       // Reset form data
       setFormData({
         name: '',
         email: '',
+        rVehicle:'',
+        rPackage:'',
         contactNumber: '',
         nic: '',
         pDate: '',
@@ -144,8 +196,16 @@ export function RegForm() {
     console.log(formData);
   };
 
+  const token = localStorage.getItem('accessToken')
+ // console.log(token)
   return (
-    <div className="w-full h-full flex flex-col items-start bg-slate-400 mt-[-64px]">
+   
+    <>
+
+    {token ? (
+
+      <>
+    <div className="w-screen h-full flex flex-col items-start bg-slate-400 mt-[-64px]">
 
       <div className="w-full flex flex-col mt-[70px] ">
         <h1 className="text-black text-center text-3xl mt-3">BOOKING FORM</h1>
@@ -155,7 +215,7 @@ export function RegForm() {
       <div className="w-full h-full flex flex-col">
         <form onSubmit={handleSubmit}>
 {/* 1 */}
-          <div className="flex flex-row w-full gap-3 my-2 justify-center">
+          <div className="flex flex-row  w-full gap-3 my-2 justify-center">
             <div className="flex flex-col">
               <label htmlFor="name" className="font-semibold text-base">
                 Your Name
@@ -163,7 +223,7 @@ export function RegForm() {
               <input
                 id="name"
                 type="text"
-                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 h-7 ${
                   errors.name ? 'border-red-500' : ''
                 }`}
                 placeholder="Name"
@@ -182,7 +242,7 @@ export function RegForm() {
               <input
                 id="email"
                 type="email"
-                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 h-7 ${
                   errors.email ? 'border-red-500' : ''
                 }`}
                 placeholder="Email"
@@ -191,6 +251,63 @@ export function RegForm() {
               />
               {errors.email && (
                 <span className="text-red-500 text-sm">{errors.email}</span>
+              )}
+            </div>
+          </div>
+{/* 1.1 */}
+          <div className="flex flex-row  w-full gap-3 my-2 justify-center">
+            <div className="flex flex-col">
+              <label htmlFor="vehicle" className="font-semibold text-base">
+                Vehicle
+              </label>
+
+              <select
+                id="rVehicle"
+                type="text"
+                name={formData.rVehicle}
+                className={`w-[400px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 h-7 ${
+                  errors.rVehicle ? 'border-red-500' : ''
+                }`}
+                placeholder="Select Your Vehicle"
+                value={formData.rVehicle}
+                onChange={handleChange}
+              > 
+              <option placeholder="Select Your Vehicle"></option>
+              {listOfVehicles.map((value, key) => (
+                <option key={value.id} value={value.vehicleType}>{value.vehicleType}</option>
+                
+            ))}
+            </select>
+
+              {errors.rVehicle && (
+                <span className="text-red-500 text-sm">{errors.rVehicle}</span>
+              )}
+            </div>
+{/* break */}
+            <div className="flex flex-col">
+              <label htmlFor="email" className="font-semibold">
+                Package
+              </label>
+
+              <select
+                id="rPackage"
+                type="text"
+                className={`w-[400px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 h-7 ${
+                  errors.rPackage ? 'border-red-500' : ''
+                }`}
+                placeholder="Select Your Package"
+                value={formData.rPackage}
+                onChange={handleChange}
+              >
+                <option ></option>
+                <option value="2 Hours">2 Hours</option>
+                <option value="4 Hours">4 Hours</option>
+                <option value="8 Hours">8 Hours</option>
+              </select>
+              
+
+              {errors.rPackage && (
+                <span className="text-red-500 text-sm">{errors.rPackage}</span>
               )}
             </div>
           </div>
@@ -203,7 +320,7 @@ export function RegForm() {
               <input
                 id="contactNumber"
                 type="text"
-                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 h-7 ${
                   errors.contactNumber ? 'border-red-500' : ''
                 }`}
                 placeholder="Number"
@@ -224,7 +341,7 @@ export function RegForm() {
               <input
                 id="nic"
                 type="text"
-                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 h-7 ${
                   errors.nic ? 'border-red-500' : ''
                 }`}
                 placeholder="NIC Number"
@@ -245,7 +362,7 @@ export function RegForm() {
               <input
                 id="pDate"
                 type="date"
-                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 h-7 ${
                   errors.pDate ? 'border-red-500' : ''
                 }`}
                 placeholder="Select Here"
@@ -264,7 +381,7 @@ export function RegForm() {
               <input
                 id="passenger"
                 type="number"
-                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 h-7 ${
                   errors.passenger ? 'border-red-500' : ''
                 }`}
                 placeholder="Please Select"
@@ -287,7 +404,7 @@ export function RegForm() {
               <input
                 id="pLocation"
                 type="text"
-                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 h-7 ${
                   errors.pLocation ? 'border-red-500' : ''
                 }`}
                 placeholder="Pick-Up Location"
@@ -308,7 +425,7 @@ export function RegForm() {
               <input
                 id="dLocation"
                 type="text"
-                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 h-7 ${
                   errors.dLocation ? 'border-red-500' : ''
                 }`}
                 placeholder="Drop-Off Location"
@@ -331,7 +448,7 @@ export function RegForm() {
               <input
                 id="pTime"
                 type="time"
-                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 h-7 ${
                   errors.pTime ? 'border-red-500' : ''
                 }`}
                 placeholder="Select Time"
@@ -350,7 +467,7 @@ export function RegForm() {
               <input
                 id="dTime"
                 type="time"
-                className={`w-[400px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 h-7 ${
+                className={`w-[400px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 h-7 ${
                   errors.dTime ? 'border-red-500' : ''
                 }`}
                 placeholder="Select Time"
@@ -370,7 +487,7 @@ export function RegForm() {
               </label>
               <textarea
                 id="message"
-                className={`w-[810px] h-[100px] bg-[#e2e2e2] outline-none outline-offset-2 my-2 ${
+                className={`w-[810px] h-[100px] bg-[#e2e2e2] rounded-md outline-none outline-offset-2 my-2 ${
                   errors.message ? 'border-red-500' : ''
                 }`}
                 placeholder="Type your message here"
@@ -394,5 +511,14 @@ export function RegForm() {
         </form>
       </div>
     </div>
+    </>
+
+    ) : (
+
+      <Login/>
+
+    )}
+
+</>
   );
 }

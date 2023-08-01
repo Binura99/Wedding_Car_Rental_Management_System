@@ -8,6 +8,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    rPackage: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    rVehicle: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     contactNumber: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -41,6 +49,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
     },
     message: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    rDriver: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    driverNum: {
         type: DataTypes.STRING,
         allowNull: false,
     },
