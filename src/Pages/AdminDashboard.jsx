@@ -32,10 +32,10 @@ export const AdminDashboard = () => {
                         </button>
                     </a>
             {/* 1.3 */}
-                        <button className='gap-2 items-center flex flex-col p-5 w-[200px] rounded-2xl transition-all duration-200 bg-white shadow-lg hover:bg-orange-200 cursor-pointer'>
+                        {/* <button className='gap-2 items-center flex flex-col p-5 w-[200px] rounded-2xl transition-all duration-200 bg-white shadow-lg hover:bg-orange-200 cursor-pointer'>
                             <img src={CARS_REPORT} alt="User" className='h-32' />
                             <p className='font-semibold text-center'>REPORTS</p>
-                        </button>
+                        </button> */}
             </div>
 {/* 2 */}
             <div className='my-5 flex flex-row gap-x-24'>

@@ -91,11 +91,12 @@ export const UserDashboard = () => {
         <p className="mt-2 text-slate-500">Reservation No: <span className='font-semibold text-black'>{value.id}</span></p>
         <p className="mt-2 text-slate-500">Name: <span className='font-semibold text-black'>{value.name}</span></p>
         <p className="mt-2 text-slate-500">NIC: <span className='font-semibold text-black'>{value.nic}</span></p>
+        <p className="mt-2 text-slate-500">Date: <span className='font-semibold text-black'>{value.pDate}</span></p>
         <p className="mt-2 text-slate-500">Time: <span className='font-semibold text-black'>{value.pTime}</span></p>
         <p className="mt-2 text-slate-500">Location: <span className='font-semibold text-black'>{value.pLocation} to {value.dLocation}</span></p>
         <p className="mt-2 text-slate-500">Paid: </p>
-        <p className="mt-2 text-slate-500">Driver: </p>
-        <p className="mt-2 text-slate-500">Driver Number: </p>
+        <p className="mt-2 text-slate-500">Driver: <span className='font-semibold text-black'>{value.rDriver}</span></p>
+        <p className="mt-2 text-slate-500">Driver Number: <span className='font-semibold text-black'>{value.driverNum}</span></p>
         <p className="mt-2 text-center font-semibold text-sm text-slate-500">Notice <span className='text-red-700'>*</span> - If You Want The Change Details Please Call Our Hotline</p>
 
         <button className='w-full text-white font-bold mt-10 bg-[#c4c4c4] rounded-3xl p-2 text-center flex items-center justify-center hover:bg-[#caaa88]/80 cursor-pointer'

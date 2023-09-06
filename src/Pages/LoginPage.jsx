@@ -9,6 +9,7 @@ export const Login = () => {
   let navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const login = () => {
     const data = { email: email, password: password };
@@ -22,7 +23,13 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email || !password) {
+      setErrorMessage("Please fill in all fields");
+      return;
+    }else{
     login();
+    return;
+  }
     
   };
 
@@ -52,7 +59,7 @@ export const Login = () => {
                 id='userEmail'
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
-                required
+
               />
 
               <label htmlFor="Password" className="text-base font-medium text-gray-900">
@@ -66,9 +73,13 @@ export const Login = () => {
                 id='password'
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
-                required
+
               />
             </div>
+
+            {errorMessage && (
+                <p className="text-red-500 mb-4">{errorMessage}</p>
+              )}
 
             <div className='w-full flex items-center justify-between'>
               <div className='w-full flex'>
@@ -90,7 +101,7 @@ export const Login = () => {
               </button>
             </a>
 
-          <div className='w-full flex items-center justify-center relative py-2 my-2'>
+          {/* <div className='w-full flex items-center justify-center relative py-2 my-2'>
             <div className='w-full h-[1px] bg-black'></div>
             <p className='text-lg absolute text-black/80 bg-[#f5f5f5]'>or</p>
           </div>
@@ -98,7 +109,7 @@ export const Login = () => {
           <div className='w-full text-black font-medium my-2 bg-white border-2 border-[#CCB195] rounded-3xl p-2 text-center flex items-center justify-center transition-all duration-200 hover:bg-[#CCB195]  hover:text-white cursor-pointer'>
             <img src={GIcon} alt='Google_Image' className='h-5 mr-2' />
             LOGIN WITH GOOGLE ACCOUNT
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

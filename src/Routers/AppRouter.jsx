@@ -17,7 +17,8 @@ import { Test3 } from "../Pages/Test3"
 import { AdminDashboard } from "../Pages/AdminDashboard"
 import { ManageUsers } from "../Pages/ManageUsers"
 import { ManageBooking } from "../Pages/ManageBooking"
-import DriverDashboard from "../Pages/DriverDashboard"
+import { DriverDashboard } from "../Pages/DriverDashboard"
+import { MonthReport } from "../Pages/MonthReport"
 // import axios from "axios"
 // import { AuthContext } from "../helpers/AuthContext"
 // import { useState, useEffect} from "react"
@@ -50,6 +51,7 @@ const AppRouter = () => {
           <Route path="driverDashboard" element={<DriverDashboard/>}/>
           <Route path="manageUsers" element={<ManageUsers/>}/>
           <Route path="manageBooking" element={<ManageBooking/>}/>
+          <Route path="monthReport" element={<MonthReport/>}/>
 
 
         </Route>
